@@ -1,5 +1,30 @@
 stages:
+  - build
   - test
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+before_script:
+  - pip install hatch hatch-vcs
+
+build_tag:
+  stage: build
+  script:
+    - hatch build
+    - echo "my-arithmetic-$USER deployment on stable servers"
+    - ls -l dist/
+  only:
+    - tags
+
+build_develop:
+  stage: build
+  script:
+    - hatch build
+    - echo "my-arithmetic-$USER deployment on develop servers"
+    - ls -l dist/
+  only:
+    - develop
 
 test:
   stage: test
