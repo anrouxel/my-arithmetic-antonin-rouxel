@@ -9,6 +9,7 @@ image: python:3.9
 
 before_script:
   - pip install hatch hatch-vcs
+  - chmod -R 777 dist/
 
 build_tag:
   stage: build
