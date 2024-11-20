@@ -32,6 +32,7 @@ Issues = "https://github.com/Antonin Rouxel/my-arithmetic-antonin-rouxel/issues"
 Source = "https://github.com/Antonin Rouxel/my-arithmetic-antonin-rouxel"
 
 [tool.hatch.version]
+source = "vcs"
 path = "src/my_arithmetic_antonin_rouxel/__about__.py"
 
 [tool.hatch.envs.types]
@@ -59,6 +60,3 @@ exclude_lines = [
   "if __name__ == .__main__.:",
   "if TYPE_CHECKING:",
 ]
-
-[tool.hatch.version]
-source = "vcs"
