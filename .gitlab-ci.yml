@@ -23,8 +23,6 @@ build_develop:
     - hatch build
     - echo "my-arithmetic-$USER deployment on develop servers"
     - ls -l dist/
-  only:
-    - develop
 
 test:
   stage: test
