@@ -6,7 +6,9 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
 before_script:
-  - pip install hatch hatch-vcs
+  image: python:3.9
+  script:
+    - pip install hatch hatch-vcs
 
 build_tag:
   stage: build
