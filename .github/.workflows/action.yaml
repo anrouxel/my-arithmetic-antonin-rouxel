@@ -2,10 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    tags:
-      - '*'
-    branches:
-      - develop
+  workflow_dispatch:
 
 jobs:
   build_tag:
