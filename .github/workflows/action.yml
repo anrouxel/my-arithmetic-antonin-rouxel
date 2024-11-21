@@ -62,3 +62,47 @@ jobs:
         run: pip install hatch hatch-vcs
       - name: Run tests
         run: hatch test
+
+  deploy_docs:
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: pip install sphinx sphinx-rtd-theme sphinxcontrib-napoleon
+      - name: Build documentation
+        run: |
+          cd docs
+          make html
+      - name: Deploy to Read the Docs
+        run: |
+          pip install readthedocs-sphinx-ext
+          rtd-build
+
+  coverage:
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: pip install coverage coveralls
+      - name: Run tests with coverage
+        run: |
+          coverage run -m pytest
+          coverage report
+      - name: Upload coverage to Coveralls
+        run: coveralls
