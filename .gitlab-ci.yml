@@ -16,7 +16,6 @@ build_tag:
     - hatch build
     - echo "my-arithmetic-$USER deployment on stable servers"
     - ls -l dist/
-    - chmod -R 777 dist/
   only:
     - tags
 
@@ -26,9 +25,8 @@ build_develop:
     - hatch build
     - echo "my-arithmetic-$USER deployment on develop servers"
     - ls -l dist/
-    - chmod -R 777 dist/
 
 test:
   stage: test
   script:
-    - echo "my-arithmetic-$USER testing on stable servers"
+    - hatch run test
