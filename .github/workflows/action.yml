@@ -58,7 +58,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-      - name: Install dependencies
-        run: pip install hatch hatch-vcs
+      - name: Install Hatch
+        run: pipx install hatch
       - name: Run tests
-        run: hatch run test
+        run: hatch run test:test
