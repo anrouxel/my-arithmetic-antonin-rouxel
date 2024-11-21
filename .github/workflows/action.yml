@@ -59,6 +59,6 @@ jobs:
         with:
           python-version: 3.9
       - name: Install Hatch
-        run: pipx install hatch
+        run: pip install hatch hatch-vcs
       - name: Run tests
-        run: hatch run test
+        run: hatch test
