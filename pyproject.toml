@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "my-arithmetic-antonin-rouxel"
 dynamic = ["version"]
 description = ''
-readme = "README.adoc"
+#readme = "README.adoc"
 requires-python = ">=3.8"
 license = "MIT"
 keywords = []
