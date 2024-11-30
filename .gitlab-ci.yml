@@ -8,7 +8,15 @@ variables:
 
 image: python:3.9
 
+cache:
+  paths:
+    - .cache/pip
+    - venv/
+
 before_script:
+  - python -m venv venv
+  - source venv/bin/activate
+  - pip install --upgrade pip
   - pip install hatch hatch-vcs
 
 build:
@@ -45,7 +53,7 @@ coverage:
 deploy:
   stage: deploy
   script:
-    - echo "my_arithmetic-antonin-rouxel deployment on stable servers
+    - echo "my_arithmetic-antonin-rouxel deployment on stable servers"
     - hatch build
     - ls -l dist/
     - mkdir -p artifacts
@@ -53,10 +61,9 @@ deploy:
     - rm -rf dist/
   artifacts:
     paths:
-    - artifacts/
+      - artifacts/
   only:
-  - tags
-
+    - tags
 
 sync-with-github:
   stage: deploy
