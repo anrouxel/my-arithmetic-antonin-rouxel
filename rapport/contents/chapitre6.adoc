@@ -29,9 +29,9 @@ include::../../docs/conf.py[]
 include::../../.readthedocs.yaml[]
 ----
 
-image:imgs/readthedocs_compile.png[]
+image:../imgs/readthedocs_compile.png[]
 
-image:imgs/readthedocs.png[]
+image:../imgs/readthedocs.png[]
 
 **Publication de la couverture de code sur Coveralls**
 
@@ -42,4 +42,4 @@ Coveralls a été configuré pour afficher la couverture de code du projet :
 include::../../.github/workflows/test.yml[lines=64..69]
 ----
 
-image:imgs/coveralls.png[]
+image:../imgs/coveralls.png[]
