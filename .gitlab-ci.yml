@@ -22,7 +22,6 @@ before_script:
   - pip install --upgrade pip
   - pip install hatch hatch-vcs
 
-
 test:
   stage: test
   script:

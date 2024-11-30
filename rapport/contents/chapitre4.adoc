@@ -1,0 +1,81 @@
+== Mise en place de GitLab CI/CD
+
+=== Configuration du Pipeline
+
+==== Stages
+- **sync** : Synchronisation avec GitHub
+- **test** : Exécution des tests
+- **coverage** : Génération du rapport de couverture des tests
+- **build** : Construction du projet et préparation des artefacts
+- **deploy** : Déploiement sur les serveurs
+
+[source,yaml]
+----
+include::../../.gitlab-ci.yml[lines=1..6]
+----
+
+==== Variables et Image de Base
+Le pipeline utilise une image Docker de base pour Python version 3.9 et définit des variables importantes comme `PYTHON_VERSION` :
+
+[source,yaml]
+----
+include::../../.gitlab-ci.yml[lines=8..11]
+----
+
+==== Cache et Optimisation
+Le pipeline utilise un cache pour stocker les dépendances Python et accélérer le processus de build :
+
+[source,yaml]
+----
+include::../../.gitlab-ci.yml[lines=13..16]
+----
+
+==== Before Script
+Avant l'exécution de chaque job, un environnement virtuel est créé et les dépendances nécessaires sont installées :
+
+[source,yaml]
+----
+include::../../.gitlab-ci.yml[lines=18..23]
+----
+
+=== Exécution des Jobs
+
+==== Job `test`
+Ce job exécute les tests unitaires avec `hatch` et génère des artefacts de couverture qui sont utilisés dans le job suivant :
+
+[source,yaml]
+----
+include::../../.gitlab-ci.yml[lines=25..33]
+----
+
+==== Job `coverage`
+Le job génère les rapports de couverture et les enregistre comme artefacts :
+
+[source,yaml]
+----
+include::../../.gitlab-ci.yml[lines=35..48]
+----
+
+==== Job `build`
+Le job de build se déclenche uniquement sur la branche `develop`. Il construit le projet et prépare les artefacts pour le déploiement :
+
+[source,yaml]
+----
+include::../../.gitlab-ci.yml[lines=50..68]
+----
+
+==== Job `deploy`
+Le job de déploiement est exécuté uniquement sur des tags. Il déploie le projet sur les serveurs de production :
+
+[source,yaml]
+----
+include::../../.gitlab-ci.yml[lines=70..88]
+----
+
+=== Synchronisation avec GitHub
+Le job `sync-with-github` permet de synchroniser le dépôt GitLab avec GitHub en utilisant Git pour puller et pousser les modifications entre les deux :
+
+[source,yaml]
+----
+include::../../.gitlab-ci.yml[lines=90..116]
+----
