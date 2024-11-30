@@ -70,9 +70,6 @@ build:
 
 deploy:
   stage: deploy
-  needs:
-    - job: build
-      artifacts: true
   script:
     - echo "🚀 my_arithmetic-antonin-rouxel deployment on stable servers"
     - echo "📦 Building the project..."
