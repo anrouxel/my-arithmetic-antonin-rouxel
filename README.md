@@ -1,6 +1,6 @@
 # my-arithmetic-antonin-rouxel
 
-[![Coverage](https://gitlab.univ-lr.fr/arouxel/my-arithmetic-antonin-rouxel/badges/main/coverage.svg)]()
+[![Coverage](https://gitlab.univ-lr.fr/arouxel/my-arithmetic-antonin-rouxel/badges/main/coverage.svg?job=coverage)]()
 [![PyPI - Version](https://img.shields.io/pypi/v/my-arithmetic-antonin-rouxel.svg)](https://pypi.org/project/my-arithmetic-antonin-rouxel)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/my-arithmetic-antonin-rouxel.svg)](https://pypi.org/project/my-arithmetic-antonin-rouxel)
 
