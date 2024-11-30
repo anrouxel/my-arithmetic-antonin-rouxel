@@ -27,6 +27,7 @@ test:
   script:
     - echo "🧪 Running tests..."
     - hatch test --cover-quiet --randomize --parallel --retries 5 --retry-delay 3
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
   artifacts:
     paths:
       - .coverage
