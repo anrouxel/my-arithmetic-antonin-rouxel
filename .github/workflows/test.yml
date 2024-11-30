@@ -46,7 +46,8 @@ jobs:
       - name: 📂 Download coverage data
         uses: actions/download-artifact@v4
         with:
-          name: coverage-data
+          pattern: coverage
+          merge-multiple: true
 
       - name: 📜 Generate coverage reports
         run: |
