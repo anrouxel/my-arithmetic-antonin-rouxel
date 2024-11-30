@@ -7,3 +7,8 @@ Ce TD a pour objectif de maîtriser les fondamentaux de la mise en place d’un 
 
 - **Intégration Continue (CI) :** Vérifie automatiquement l’intégrité du code à chaque modification, garantissant un feedback rapide.
 - **Déploiement Continu (CD) :** Automatise le passage en production, réduisant les délais et le risque d’erreurs humaines.
+
+=== Accès au dépôt Git
+
+Le code source et les configurations associées à ce projet sont disponibles dans le dépôt Git suivant :
+https://gitlab.univ-lr.fr/arouxel/my-arithmetic-antonin-rouxel.git

@@ -1,5 +1,6 @@
-= Rapport
+= Rapport CI/CD
 Antonin Rouxel <antonin.rouxel@etudiant.univ-lr.fr>
+v1.0
 :reproducible:
 :listing-caption: Listing
 :source-highlighter: rouge
