@@ -27,13 +27,12 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Documentation = "https://github.com/Antonin Rouxel/my-arithmetic-antonin-rouxel#readme"
-Issues = "https://github.com/Antonin Rouxel/my-arithmetic-antonin-rouxel/issues"
-Source = "https://github.com/Antonin Rouxel/my-arithmetic-antonin-rouxel"
+Documentation = "https://github.com/anrouxel/my-arithmetic-antonin-rouxel#readme"
+Issues = "https://github.com/anrouxel/my-arithmetic-antonin-rouxel/issues"
+Source = "https://github.com/anrouxel/my-arithmetic-antonin-rouxel"
 
 [tool.hatch.version]
 source = "vcs"
-path = "src/my_arithmetic_antonin_rouxel/__about__.py"
 
 [tool.hatch.envs.types]
 extra-dependencies = [
@@ -60,3 +59,15 @@ exclude_lines = [
   "if __name__ == .__main__.:",
   "if TYPE_CHECKING:",
 ]
+
+[tool.hatch.envs.coverage]
+detached = true
+dependencies = [
+  "coverage[toml]>=6.2",
+  "lxml",
+]
+
+[tool.hatch.envs.coverage.scripts]
+combine = "coverage combine {args}"
+report-xml = "coverage xml"
+report-uncovered-html = "coverage html --skip-covered --skip-empty"
