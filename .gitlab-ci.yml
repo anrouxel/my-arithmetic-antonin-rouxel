@@ -1,7 +1,7 @@
 stages:
-  - build
-  - test
-  - deploy
+  - 🛠️ Build
+  - 🧪 Test
+  - 🚀 Deploy
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -20,9 +20,10 @@ before_script:
   - pip install hatch hatch-vcs
 
 build:
-  stage: build
+  stage: 🛠️ Build
+  name: 🏗️ Build Artifacts
   script:
-    - echo "my_arithmetic-antonin-rouxel deployment on develop servers"
+    - echo "🚀 my_arithmetic-antonin-rouxel deployment on develop servers"
     - hatch build
     - ls -l dist/
     - mkdir -p artifacts
@@ -35,12 +36,14 @@ build:
     - if: '$CI_COMMIT_BRANCH == "develop"'
 
 test:
-  stage: test
+  stage: 🧪 Test
+  name: 🧪 Run Tests
   script:
     - hatch test
 
 coverage:
-  stage: test
+  stage: 🧪 Test
+  name: 📊 Coverage Report
   script:
     - hatch test --cover
   coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
@@ -51,9 +54,10 @@ coverage:
         path: coverage.xml
 
 deploy:
-  stage: deploy
+  stage: 🚀 Deploy
+  name: 🚀 Deploy Artifacts
   script:
-    - echo "my_arithmetic-antonin-rouxel deployment on stable servers"
+    - echo "🚀 my_arithmetic-antonin-rouxel deployment on stable servers"
     - hatch build
     - ls -l dist/
     - mkdir -p artifacts
@@ -66,7 +70,8 @@ deploy:
     - tags
 
 sync-with-github:
-  stage: deploy
+  stage: 🚀 Deploy
+  name: 🔄 Sync with GitHub
   before_script:
     - git config --global user.name "${GITLAB_USER_NAME}"
     - git config --global user.email "${GITLAB_USER_EMAIL}"
