@@ -1,0 +1,6 @@
+== Conclusion
+=== Résultats obtenus
+
+- **Pipeline CI/CD fonctionnel :** Automatisation complète des tests et des builds.
+- **Documentation déployée :** Disponible en ligne via ReadTheDocs.
+- **Couverture de code :** Visualisée et suivie via Coveralls.

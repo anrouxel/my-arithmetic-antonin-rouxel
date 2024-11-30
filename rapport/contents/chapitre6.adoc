@@ -1,0 +1,39 @@
+== Documentation et couverture de code
+=== Rédaction de la documentation avec Sphinx
+
+[underline]#Commandes pour générer la documentation :#
+
+[source, bash]
+----
+pip install sphinx napoleon
+sphinx-quickstart
+----
+
+=== Publication sur ReadTheDocs et configuration de la couverture de code sur Coveralls
+
+**Publication sur ReadTheDocs**
+
+Le projet a été publié sur ReadTheDocs pour faciliter l'accès à la documentation :
+
+[underline]#Configuration du fichier conf.py#
+
+[source, yaml]
+----
+include::../../docs/conf.py[]
+----
+
+[underline]#Création du fichier .readthedocs.yml#
+
+[source, yaml]
+----
+include::../../.readthedocs.yaml[]
+----
+
+**Configuration de la couverture de code sur Coveralls**
+
+Coveralls a été configuré pour afficher la couverture de code du projet :
+
+[source, yaml]
+----
+include::../../.github/workflows/test.yml[lines=64..69]
+----

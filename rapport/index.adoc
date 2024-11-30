@@ -18,3 +18,7 @@ include::contents/chapitre3.adoc[]
 include::contents/chapitre4.adoc[]
 
 include::contents/chapitre5.adoc[]
+
+include::contents/chapitre6.adoc[]
+
+include::contents/chapitre7.adoc[]
