@@ -1,0 +1,35 @@
+== Mise en place du projet
+=== Création du projet Python avec Hatch
+
+[underline]#Commandes utilisées pour initialiser le projet Python :#
+
+[source, bash]
+----
+hatch new my-arithmetic-$USER
+cd my-arithmetic-$USER
+----
+
+=== Développement de la fonction de calcul du PGCD et implémentation des tests
+
+[underline]#Fonction développée :#
+
+[source, python]
+----
+include::../../src/my_arithmetic_antonin_rouxel/pgcd.py[]
+----
+
+[underline]#Tests unitaires :#
+
+[source, python]
+----
+include::../../tests/test_pgcd.py[]
+----
+
+=== Exécution et validation des tests unitaires
+
+[underline]#Tests exécutés avec succès via :#
+
+[source, bash]
+----
+hatch test
+----

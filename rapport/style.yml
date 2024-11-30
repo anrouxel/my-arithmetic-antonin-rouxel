@@ -1,0 +1,16 @@
+extends: default
+base:
+  font-family: Montserrat
+font:
+  catalog:
+    merge: true 
+    Ubuntu:
+      normal: Ubuntu/Ubuntu-R.ttf
+      italic: Ubuntu/Ubuntu-RI.ttf
+      bold: Ubuntu/Ubuntu-B.ttf
+      bold_italic: Ubuntu/Ubuntu-BI.ttf
+    Montserrat:
+      normal: Montserrat/Montserrat-Regular.ttf
+      italic: Montserrat/Montserrat-Italic.ttf
+      bold: Montserrat/Montserrat-Bold.ttf
+      bold_italic: Montserrat/Montserrat-BoldItalic.ttf

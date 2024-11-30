@@ -1,0 +1,9 @@
+== Introduction
+=== Présentation du contexte et des objectifs du TD
+
+Ce TD a pour objectif de maîtriser les fondamentaux de la mise en place d’un pipeline CI/CD. Le projet consiste à automatiser les tests, la génération de versions et le déploiement en utilisant Docker, Hatch, GitLab CI/CD et GitHub Actions.
+
+=== Importance de l’intégration et du déploiement continus
+
+- **Intégration Continue (CI) :** Vérifie automatiquement l’intégrité du code à chaque modification, garantissant un feedback rapide.
+- **Déploiement Continu (CD) :** Automatise le passage en production, réduisant les délais et le risque d’erreurs humaines.

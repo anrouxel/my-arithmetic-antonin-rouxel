@@ -1,0 +1,74 @@
+
+== Configuration de l’environnement
+=== Installation et configuration de Docker/Podman, gitlab-runner et hatch
+
+=== Installation de Docker/Podman
+
+==== Qu'est-ce que Docker ?
+
+**Docker** est une plateforme populaire de conteneurisation qui permet de créer, déployer et gérer des applications à l'intérieur de conteneurs. Un conteneur est une unité légère et portable qui regroupe une application et ses dépendances pour qu'elle puisse fonctionner de manière cohérente dans n'importe quel environnement.
+
+Docker utilise un démon (`dockerd`) qui gère la création et l'exécution des conteneurs. Il dispose également de son propre registre, **Docker Hub**, où sont hébergées les images conteneurs. Docker Compose est un outil compagnon qui facilite la gestion des environnements multi-conteneurs.
+
+==== Qu'est-ce que Podman ?
+
+**Podman** est un moteur de conteneurs similaire à Docker, mais il se distingue par le fait qu'il fonctionne sans démon. Podman suit une approche "rootless" (sans utilisateur root), offrant une meilleure sécurité, en permettant à l'utilisateur de gérer les conteneurs sans droits d'administration. Cela rend Podman idéal pour des environnements nécessitant un niveau de sécurité accru.
+
+Podman est conçu pour être compatible avec Docker en termes d'interface de ligne de commande (CLI), ce qui signifie que beaucoup des commandes Docker fonctionnent de manière identique dans Podman. Il utilise aussi des outils comme **Buildah** (pour la création d'images) et **Skopeo** (pour la gestion des images).
+
+==== Comparatif entre Docker et Podman
+
+[cols="1,1,1", options="header"]
+|===
+| Fonctionnalité           | Docker                                         | Podman                                           
+| **Architecture**          | Fonctionne avec un démon (`dockerd`)           | Sans démon (démonless)                            
+| **Privilèges root**       | Nécessite l’accès root pour de nombreuses tâches | Fonctionne sans utilisateur root (rootless)       
+| **Compatibilité CLI**     | CLI propriétaire                               | Compatible avec Docker CLI                        
+| **Gestion des images**    | Docker Hub (par défaut)                        | Peut utiliser n'importe quel registre (Docker Hub, Quay, etc.) 
+| **Sécurité**              | Fonctionne majoritairement avec root           | Sécurité améliorée avec les conteneurs rootless   
+| **Outils complémentaires**| Docker Compose                                | Podman Compose, Buildah, Skopeo                   
+| **Installation**          | Besoin de Docker Engine pour exécuter les conteneurs | Pas besoin d'un démon en arrière-plan            
+|===
+
+
+==== Installation de gitlab-runner
+
+[underline]#Docker :#
+
+[source, bash]
+----
+docker run -d --name gitlab-runner --restart always \
+  -v gitlab-runner-config:/etc/gitlab-runner \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  gitlab/gitlab-runner:latest
+----
+
+[underline]#Podman :#
+[source, bash]
+----
+podman run -d --name gitlab-runner --restart always --security-opt label:disable \
+    -v gitlab-runner-config:/etc/gitlab-runner \
+    -v /run/user/$(id -u)/podman/podman.sock:/var/run/docker.sock \
+    gitlab/gitlab-runner:alpine
+----
+
+==== Installation de Hatch
+
+[source, bash]
+----
+pipx install hatch
+----
+
+=== Difficultés rencontrées et solutions apportées
+
+==== SELinux : Explication des options `:z` et `:Z` lors du montage de volumes
+
+Lors du montage de volumes dans Docker, il peut être nécessaire de gérer les permissions SELinux. Sur un système où SELinux est activé, les conteneurs Docker pourraient ne pas avoir les permissions nécessaires pour accéder aux volumes montés.
+
+Les options `:z` et `:Z` ajustent automatiquement les permissions SELinux pour permettre l’accès au volume.
+
+- **`:z`** : Applique un contexte de sécurité partagé, ce qui permet à plusieurs conteneurs d’accéder au même volume.
+- **`:Z`** : Applique un contexte de sécurité exclusif, garantissant que seul le conteneur courant a accès au volume.
+
+Ces options permettent de respecter les règles de sécurité imposées par SELinux tout en assurant le bon fonctionnement des volumes montés dans les conteneurs.
+
