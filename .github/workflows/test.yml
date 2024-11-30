@@ -1,0 +1,32 @@
+name: 🧪 Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: 📦 Install dependencies
+        run: pip install hatch hatch-vcs
+
+      - name: ✅ Run tests
+        run: |
+          echo "🔍 Running tests"
+          hatch test --cover-quiet --randomize --parallel --retries 5 --retry-delay 3
+
+      - name: 📊 Upload coverage data
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-data
+          path: .coverage
