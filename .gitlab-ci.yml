@@ -1,12 +1,14 @@
 stages:
-  - 🛠️ Build
-  - 🧪 Test
-  - 🚀 Deploy
+  - sync
+  - test
+  - coverage
+  - build
+  - deploy
 
 variables:
-  GIT_SUBMODULE_STRATEGY: recursive
+  PYTHON_VERSION: "3.9"
 
-image: python:3.9
+image: python:${PYTHON_VERSION}
 
 cache:
   paths:
@@ -19,58 +21,71 @@ before_script:
   - pip install --upgrade pip
   - pip install hatch hatch-vcs
 
-build:
-  stage: 🛠️ Build
-  name: 🏗️ Build Artifacts
-  script:
-    - echo "🚀 my_arithmetic-antonin-rouxel deployment on develop servers"
-    - hatch build
-    - ls -l dist/
-    - mkdir -p artifacts
-    - cp -r dist/ artifacts/
-    - rm -rf dist/
-  artifacts:
-    paths:
-      - artifacts/
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "develop"'
 
 test:
-  stage: 🧪 Test
-  name: 🧪 Run Tests
+  stage: test
   script:
-    - hatch test
+    - hatch test --cover-quiet --randomize --parallel --retries 5 --retry-delay 3
+  artifacts:
+    paths:
+      - .coverage
+    expire_in: 1 day
 
 coverage:
-  stage: 🧪 Test
-  name: 📊 Coverage Report
+  stage: coverage
+  needs:
+    - job: test
+      artifacts: true
   script:
-    - hatch test --cover
-  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+    - hatch run coverage:report-xml
+    - hatch run coverage:report-uncovered-html
   artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: coverage.xml
+    paths:
+      - htmlcov/
+      - coverage.xml
+    expire_in: 1 week
 
-deploy:
-  stage: 🚀 Deploy
-  name: 🚀 Deploy Artifacts
+build:
+  stage: build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'
   script:
-    - echo "🚀 my_arithmetic-antonin-rouxel deployment on stable servers"
+    - echo "🚀 my_arithmetic-antonin-rouxel deployment on develop servers"
+    - echo "📦 Building the project..."
     - hatch build
     - ls -l dist/
+    - echo "📂 Copying build artifacts..."
     - mkdir -p artifacts
     - cp -r dist/ artifacts/
     - rm -rf dist/
   artifacts:
     paths:
       - artifacts/
+    expire_in: 1 week
+
+deploy:
+  stage: deploy
+  needs:
+    - job: build
+      artifacts: true
+  script:
+    - echo "🚀 my_arithmetic-antonin-rouxel deployment on stable servers"
+    - echo "📦 Building the project..."
+    - hatch build
+    - ls -l dist/
+    - echo "📂 Copying build artifacts..."
+    - mkdir -p artifacts
+    - cp -r dist/ artifacts/
+    - rm -rf dist/
+  artifacts:
+    paths:
+      - artifacts/
+    expire_in: 1 week
   only:
     - tags
 
 sync-with-github:
-  stage: 🚀 Deploy
+  stage: sync
   name: 🔄 Sync with GitHub
   before_script:
     - git config --global user.name "${GITLAB_USER_NAME}"
