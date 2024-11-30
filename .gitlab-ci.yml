@@ -16,6 +16,7 @@ cache:
     - venv/
 
 before_script:
+  - echo "🛠️ Setting up the environment..."
   - python -m venv venv
   - source venv/bin/activate
   - pip install --upgrade pip
@@ -25,6 +26,7 @@ before_script:
 test:
   stage: test
   script:
+    - echo "🧪 Running tests..."
     - hatch test --cover-quiet --randomize --parallel --retries 5 --retry-delay 3
   artifacts:
     paths:
@@ -37,6 +39,7 @@ coverage:
     - job: test
       artifacts: true
   script:
+    - echo "📊 Generating coverage report..."
     - hatch run coverage:report-xml
     - hatch run coverage:report-uncovered-html
   artifacts:
@@ -53,10 +56,12 @@ build:
     - echo "🚀 my_arithmetic-antonin-rouxel deployment on develop servers"
     - echo "📦 Building the project..."
     - hatch build
+    - echo "🗂️ Listing files in the dist/ directory:"
     - ls -l dist/
     - echo "📂 Copying build artifacts..."
     - mkdir -p artifacts
     - cp -r dist/ artifacts/
+    - echo "🧹 Cleaning up dist/ directory after deployment..."
     - rm -rf dist/
   artifacts:
     paths:
@@ -72,10 +77,12 @@ deploy:
     - echo "🚀 my_arithmetic-antonin-rouxel deployment on stable servers"
     - echo "📦 Building the project..."
     - hatch build
+    - echo "🗂️ Listing files in the dist/ directory:"
     - ls -l dist/
     - echo "📂 Copying build artifacts..."
     - mkdir -p artifacts
     - cp -r dist/ artifacts/
+    - echo "🧹 Cleaning up dist/ directory after deployment..."
     - rm -rf dist/
   artifacts:
     paths:
@@ -87,17 +94,26 @@ deploy:
 sync-with-github:
   stage: sync
   before_script:
+    - echo "🔧 Configuring Git user..."
     - git config --global user.name "${GITLAB_USER_NAME}"
     - git config --global user.email "${GITLAB_USER_EMAIL}"
     - git config --global pull.ff only 
   script:
+    - echo "🔍 Checking for GitHub remote..."
     - git remote -v | grep -w github || git remote add github $REMOTE_REPOSITORY_URL
+    - echo "🔄 Setting GitHub repository URL..."
     - git remote set-url github $REMOTE_REPOSITORY_URL
+    - echo "📂 Checking out main branch..."
     - git checkout main
+    - echo "⬇️ Pulling updates from origin main..."
     - git pull origin main --rebase
+    - echo "⬇️ Pulling updates from GitHub main..."
     - git pull github main --rebase
+    - echo "📋 Checking status..."
     - git status
+    - echo "🚀 Pushing changes to GitHub..."
     - git push $REMOTE_REPOSITORY_URL HEAD:main --force
+    - echo "🔖 Pushing tags to GitHub..."
     - git push $REMOTE_REPOSITORY_URL --tags
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
