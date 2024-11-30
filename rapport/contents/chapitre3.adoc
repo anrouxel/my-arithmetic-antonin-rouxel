@@ -9,6 +9,15 @@ hatch new my-arithmetic-$USER
 cd my-arithmetic-$USER
 ----
 
+=== Configuration du projet
+
+[underline]#Modifications apportées au fichier `pyproject.toml` pour ajouter hatch-vcs comme backend de versionnement#
+
+[source, toml]
+----
+include::../../pyproject.toml[lines=1..4;34..35]
+----
+
 === Développement de la fonction de calcul du PGCD et implémentation des tests
 
 [underline]#Fonction développée :#
