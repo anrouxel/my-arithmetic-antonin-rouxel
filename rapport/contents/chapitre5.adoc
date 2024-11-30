@@ -1,0 +1,76 @@
+== Mise en place de GitHub Actions
+
+=== Tests et Couverture
+
+==== Configuration du Workflow
+
+[source,yaml]
+----
+include::../../.github/workflows/test.yml[lines=1..7]
+----
+
+==== Jobs
+
+Le workflow est composé de deux jobs : `test` et `coverage`.
+
+==== Job `test`
+
+Le job `test` exécute les tests unitaires avec `hatch`.
+
+[source,yaml]
+----
+include::../../.github/workflows/test.yml[lines=8..33]
+----
+
+==== Job `coverage`
+
+Le job `coverage` génère les rapports de couverture et les enregistre comme artefacts.
+
+[source,yaml]
+----
+include::../../.github/workflows/test.yml[lines=35..69]
+----
+
+=== Build
+
+==== Configuration du Workflow
+
+[source,yaml]
+----
+include::../../.github/workflows/build.yml[lines=1..6]
+----
+
+==== Jobs
+
+Le workflow est composé d'un seul job : `build`.
+
+==== Job `build`
+
+Le job `build` se déclenche uniquement sur la branche `develop`. Il construit le projet et génère des artefacts.
+
+[source,yaml]
+----
+include::../../.github/workflows/build.yml[lines=8..36]
+----
+
+=== Déploiement
+
+==== Configuration du Workflow
+
+[source,yaml]
+----
+include::../../.github/workflows/deploy.yml[lines=1..6]
+----
+
+==== Jobs
+
+Le workflow est composé d'un seul job : `deploy`.
+
+==== Job `deploy`
+
+Le job `deploy` se déclenche uniquement si un tag est poussé. Il construit le projet et déploie les artefacts.
+
+[source,yaml]
+----
+include::../../.github/workflows/deploy.yml[lines=8..32]
+----
